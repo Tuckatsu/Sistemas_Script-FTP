@@ -1,0 +1,164 @@
+[14:07] León Cabarcos, Juan
+#/bin/bash
+
+while true
+
+do
+
+echo""
+
+echo""
+
+ip a | grep -E '\b[0-9]{1,3}\b.[0-9]{1,3}.[0-9]{1,3}[.][0-9]{1,3}'
+
+echo ""
+ 
+if systemctl status vsftpd &> /dev/null; then
+ 
+echo "el servicio  esta instalado"
+ 
+else
+ 
+echo "el servicio no esta instalado"
+ 
+fi
+ 
+echo ""
+
+echo "1 intalar servicio"
+
+echo "2 eliminar servicio"
+
+echo "3 iniciar servicio"
+
+echo "4 parar servicio  "
+
+echo "5 opciones de configuracion"
+
+echo "6 salir servicio  "
+
+echo ""
+ 
+ 
+read -p "elige una opcion " orden
+
+echo ""
+
+case $orden in
+ 
+1)
+
+        bash instalar.sh
+
+;;
+ 
+2)
+
+        sudo apt remove vsftpd
+
+        sudo apt autoremove vsftpd
+
+        ansible-playbook -v ./des_ftp.yaml --extra-vars "ansible_sudo_pass=asz"
+
+        docker stop
+
+;;
+ 
+3)
+
+if systemctl start vsftpd &> /dev/null; then
+ 
+echo "el servicio  esta en marcha"
+ 
+else
+ 
+echo "el servicio no esta en marcha"
+
+fi
+
+;;
+ 
+4)
+
+if systemctl stop vsftpd &> /dev/null; then
+ 
+echo "el servicio  esta parado"
+ 
+else
+ 
+echo "el servicio no esta parado"
+
+fi
+
+;;
+ 
+5)
+
+        bash opciones.sh
+
+;;
+ 
+6)
+
+        break
+
+;;
+ 
+*)
+ 
+echo "elige una de las opciones disponibles"
+ 
+;;
+ 
+esac
+ 
+done
+
+[14:08] León Cabarcos, Juan
+  GNU nano 6.2                               instalar.sh                                          
+
+#/bin/bash 
+
+echo "1 intalar por comando" 
+
+echo "2 instalar por ansible" 
+
+echo "3 instalar por docker" 
+
+echo "4 salir servicio  " 
+
+
+while true; 
+
+do 
+
+read -p "elige una opcion" orden 
+
+case $orden in 
+
+1) 
+
+        sudo apt install vsftpd 
+
+;; 
+
+2) 
+
+        ansible-playbook -v ./instalar_ftp.yaml --extra-vars "ansible_sudo_pass=asz" 
+
+;; 
+
+3) 
+
+;; 
+
+4) 
+
+        break 
+
+;; 
+
+esac 
+
+done 
+
