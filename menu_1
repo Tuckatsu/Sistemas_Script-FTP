@@ -1,0 +1,52 @@
+#/bin/bash
+ip a 
+systemctl status vsftpd 
+while true
+do
+
+echo "1 intalar servicio"
+echo "2 eliminar servicio"
+echo "3 iniciar servicio"
+echo "4 parar servicio  "
+echo "5 opciones de configuracion"
+echo "6 salir servicio  "
+
+read -p "elige una opcion " orden
+case $orden in
+ 
+1)
+        bash instalar.sh
+;;
+ 
+2)
+        sudo apt remove vsftpd
+        sudo apt autoremove vsftpd
+;;
+ 
+3)
+systemctl start vsftpd
+
+;;
+ 
+4)
+systemctl stop vsftpd 
+
+;;
+ 
+5)
+        bash opciones.sh
+;;
+*)
+ 
+echo "elige una de las opciones disponibles"
+ 
+;;
+6)
+        break
+;;
+ 
+ 
+ 
+ 
+ 
+done
